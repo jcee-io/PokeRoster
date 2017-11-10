@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
-
+mongoose.connect(process.env.DATABASE_URL);
+//'mongodb://localhost/test'
 var db = mongoose.connection;
 
 db.on('error', function() {
