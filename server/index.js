@@ -8,9 +8,9 @@ var app = express();
 
 var P = new Pokedex();
 
-
-var allPokemon = pokemonDB.all().sort();
 var pokeQuery = [];
+var pokeSelect = {};
+
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,7 +21,7 @@ app.get('/pokemon', function (req, res) {
 
   db.selectAll()
   .then(pokemon => {
-  	res.json(db.selectAll());
+  	res.json(pokemon);
   });
 
 });
@@ -34,20 +34,33 @@ app.post('/pokemon', function (req, res) {
 	console.log(req.body.query);
 	var pokemon = req.body.query;
 
-	pokeQuery = pokemonDB.all().filter(item => item.toLowerCase().includes(pokemon));
+	pokeQuery = pokemonDB.all().filter(item => (
+		item.toLowerCase()[0] === pokemon[0]) && item.toLowerCase().includes(pokemon)
+	).sort();
 	
 	res.end();
 	
-	// P.getPokemonByName(pokemon)
-	// 	.then(info => {
 
-	// 		var pokeInfo = {
-	// 			name: pokemon,
-	// 			photo: info.sprites.front_default
-	// 		}
+});
 
-	// 		db.save(pokeInfo);
-	// 	});
+app.get('/acquire', function(req, res) {
+	res.json(pokeSelect);
+});
+
+app.post('/acquire', function(req, res) {
+
+	P.getPokemonByName(req.body.pokemon.toLowerCase())
+		.then(info => {
+			console.log(info);
+			var pokeInfo = {
+				name: req.body.pokemon,
+				photo: info.sprites.front_default
+			}
+
+			pokeSelect = pokeInfo;
+			res.send('/acquire');
+			res.end();
+		});
 });
 
 app.listen(process.env.PORT || 3001, function() {

@@ -2,7 +2,7 @@ import React from 'react';
 
 const PokeListEntry = props => (
   <div>
-  	<button className='poke-list-entry-button'>{props.pokemon}</button>
+  	<button onClick={() => props.select(props.pokemon)} className='poke-list-entry-button'>{props.pokemon}</button>
   </div>
 );
 

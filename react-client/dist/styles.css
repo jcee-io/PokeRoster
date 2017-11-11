@@ -1,3 +1,22 @@
+#pokelist {
+	
+}
+
+#profile-image {
+	width: 300px;
+	margin-top: -15%;
+	max-height: 400px;
+}
+
+.profile-container {
+	background: #d3d3d3;
+	text-align: center;
+}
+.prime-container {
+	display: flex;
+	justify-content: space-between;
+}
+
 .poke-list-entry-button {
   min-width: 90px;
   margin: 5px 0;

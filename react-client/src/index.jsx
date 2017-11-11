@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
 import PokeList from './components/PokeList.jsx';
+import Profile from './components/Profile.jsx';
+import Roster from './components/Roster.jsx';
 import $ from 'jquery';
 
 class App extends React.Component {
@@ -9,18 +11,33 @@ class App extends React.Component {
     super(props);
     this.state = { 
       pokelist: [],
-      query: ''
+      query: '',
+      profilePic: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png',
+      profileName: 'Mewtwo'
     }
 
     //this.pokeRender();
     this.searchHandler = this.searchHandler.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
+    this.pokeSelect = this.pokeSelect.bind(this);
+  }
+
+  pokeSelect(pokemon) {
+    console.log(pokemon);
+    $.post('/acquire',{pokemon: pokemon});
+
+    this.pokeRender();
+
   }
 
   pokeRender() {
-    $.getJSON('/pokemon', data => {
+    $.getJSON('/acquire', data => {
       console.log(data);
-      //this.setState({pokemon: data});
+      this.setState({
+        profilePic: data.photo,
+        profileName: data.name
+      });
+
     });
   }
 
@@ -51,13 +68,17 @@ class App extends React.Component {
     event.preventDefault();
   }
   render () {
-    return (<div>
-      <h1>Pokemon Roster List</h1>
-      <Search query={this.searchQuery} search={this.searchHandler} />
-      <div>
-        <PokeList pokelist={this.state.pokelist} />
+    return (
+      <div className="prime-container">
+        <div>
+        <h1>Pokemon Roster List</h1>
+        <Search query={this.searchQuery} search={this.searchHandler} />
+        <PokeList select={this.pokeSelect} pokelist={this.state.pokelist} />
+        </div>
+        <Profile profilePic={this.state.profilePic} name={this.state.profileName} />
+        <Roster />
       </div>
-    </div>)
+    )
   }
 }
 
