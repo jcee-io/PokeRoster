@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE_URL);
-//'mongodb://localhost/test'
+var Promise = require('bluebird');
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost/test');
+//
 var db = mongoose.connection;
 
 db.on('error', function() {
@@ -12,8 +13,8 @@ db.once('open', function() {
 });
 
 var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+  name: String,
+  photo: String
 });
 
 var Item = mongoose.model('Item', itemSchema);
@@ -28,4 +29,15 @@ var selectAll = function(callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+var save = item => {
+  Item.remove(item, function(err) {
+    var pokemon = new Item(item);
+
+    pokemon.save();
+  });
+
+
+};
+
+module.exports.selectAll = Promise.promisify(selectAll);
+module.exports.save = save;
