@@ -12,12 +12,34 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  name: String,
-  photo: String
-});
+var rosterSchema = mongoose.Schema({
+    1: {
+      profilePic: String,
+      profileName: String
+    },
+    2: {
+      profilePic: String,
+      profileName: String
+    },
+    3: {
+      profilePic: String,
+      profileName: String
+    },
+    4: {
+      profilePic: String,
+      profileName: String
+    },
+    5: {
+      profilePic: String,
+      profileName: String
+    },
+    6: {
+      profilePic: String,
+      profileName: String
+    }
+  });
 
-var Item = mongoose.model('Item', itemSchema);
+var Roster = mongoose.model('Roster', rosterSchema);
 
 var selectAll = function(callback) {
   Item.find({}, function(err, items) {
@@ -30,8 +52,8 @@ var selectAll = function(callback) {
 };
 
 var save = item => {
-  Item.remove(item, function(err) {
-    var pokemon = new Item(item);
+  Roster.remove(item, function(err) {
+    var pokemon = new Roster(item);
 
     pokemon.save();
   });

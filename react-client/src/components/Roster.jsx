@@ -1,8 +1,9 @@
 import React from 'react';
 
 let Profile = props => (
-  <div>
-  	<h3>Ash's Ultimate Lineup</h3>
+  <div className="roster">
+  	<div><strong>Roster</strong></div>
+  	<br/>
   	<div>Pikachu</div>
   	<div>Charizard</div>
   	<div>Greninja</div>
