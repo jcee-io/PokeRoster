@@ -20,6 +20,38 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
+var blankTemplate = {
+    1: {
+				profileName: 'None',
+				profilePic: 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200'
+    },
+    2: {
+				profileName: 'None',
+				profilePic: 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200'
+    },
+    3: {
+				profileName: 'None',
+				profilePic: 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200'
+    },
+    4: {
+				profileName: 'None',
+				profilePic: 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200'
+    },
+    5: {
+				profileName: 'None',
+				profilePic: 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200'
+    },
+    6: {
+				profileName: 'None',
+				profilePic: 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200'
+    }
+  }
+
+
+
+
+
+
 app.get('/pokemon', function (req, res) {
 
   res.json(pokeSelect);
@@ -92,6 +124,26 @@ app.post('/acquire', function(req, res) {
 
 });
 
+app.get('/roster', function(req, res) {
+	db.find()
+	.then(data => {
+
+		var arr = data;
+
+		if(arr.length < 10) {
+			for(var i = arr.length; i < 10; i++) {
+				arr.push(blankTemplate);
+			}
+		}
+		console.log(arr);
+
+		console.log(data);
+		res.json(data);
+
+
+
+	});
+});
 app.post('/roster', function(req, res) {
 	console.log(req.body['1[profilePic]']);
 

@@ -1,3 +1,9 @@
+
+#home-body {
+	margin: 0 auto;
+	width: 60%;
+}
+
 #pokelist {
 	
 }
@@ -15,12 +21,27 @@
 	max-height: 400px;
 }
 
+#roster-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin: 0 auto;
+}
+
+#roster-view {
+	display: flex;
+	margin: 0 auto;
+	width: 70%;
+}
 .roster {
 	text-align: center;
 	background: #d3d3d3;
 	font-size: 20px;
-	min-width: 150px;
-	max-height: 200px;
+	min-width: 200px;
+	max-height: 150px;
+	margin: 5% 2%;
+	padding: 2% 0 5% 0;
 }
 
 .profile-container {

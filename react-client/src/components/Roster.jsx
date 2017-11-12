@@ -1,15 +1,10 @@
 import React from 'react';
-
+import RosterListEntry from './RosterEntryList.jsx';
 let Profile = props => (
-  <div className="roster">
-  	<div><strong>Roster</strong></div>
-  	<br/>
-  	<div>Pikachu</div>
-  	<div>Charizard</div>
-  	<div>Greninja</div>
-  	<div>Snorlax</div>
-  	<div>Sceptile</div>
-  	<div>Infernape</div>
+  <div id="roster-list">
+  	{props.rosters.map((roster, index) => 
+  	  <RosterListEntry key={index} roster={roster} />
+  	)}
   </div>
 );
 

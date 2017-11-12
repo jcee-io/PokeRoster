@@ -1,169 +1,76 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Search from './components/Search.jsx';
-import PokeList from './components/PokeList.jsx';
-import Profile from './components/Profile.jsx';
+import Create from './components/Create.jsx';
+import Home from './components/Home.jsx';
 import Roster from './components/Roster.jsx';
+import {HashRouter, Switch, Route, Link} from 'react-router-dom';
 import $ from 'jquery';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.defaultProfilePic = 'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200';
-    this.defaultProfileName = 'Select Pokemon';
-
-    this.state = { 
-      pokelist: [],
-      query: '',
-      profile: {
-        1: {
-          profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
-          profileName: 'Select Pokemon'
-        }, 
-        2: {
-          profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
-          profileName: 'Select Pokemon'
-        },
-        3: {
-          profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
-          profileName: 'Select Pokemon'
-        },
-        4: {
-          profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
-          profileName: 'Select Pokemon'
-        },
-        5: {
-          profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
-          profileName: 'Select Pokemon'
-        },
-        6: {
-          profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
-          profileName: 'Select Pokemon'
-        }
-      } 
+class RosterView extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      rosters: []
     }
 
-    //this.pokeRender();
-    this.searchHandler = this.searchHandler.bind(this);
-    this.searchQuery = this.searchQuery.bind(this);
-    this.pokeSelect = this.pokeSelect.bind(this);
-    this.pokeUndo = this.pokeUndo.bind(this);
-    this.saveRoster = this.saveRoster.bind(this);
-    this.pokeCounter = 1;
+    this.loadRoster();
   }
 
-  pokeSelect(pokemon) {
-    console.log(pokemon);
-    var method = pokemon === 'default' ? 1 : undefined;
-
-    $.post('/acquire',{pokemon: pokemon});
-
-    if(this.pokeCounter <= 6) {
-      this.pokeRender(method); 
-    }
-  }
-
-  pokeUndo() {
-
-    setTimeout(() => {
-      var profiles = this.state.profile;
-
-      profiles[this.pokeCounter.toString()] = {
-        profilePic: this.defaultProfilePic,
-        profileName: this.defaultProfileName
-      }
-
-      this.pokeSelect('default');
-
-      this.pokeCounter = this.pokeCounter < 1 ? 1 : this.pokeCounter;
-
-      this.setState({profile: profiles}); 
-    },0)
-  }
-
-  pokeRender(method) {
-    $.getJSON('/acquire', data => {
+  loadRoster() {
+    $.getJSON('/roster', data => {
       console.log(data);
-      var profiles = this.state.profile;
-
-      profiles[this.pokeCounter.toString()] = {
-        profilePic: data.photo,
-        profileName: data.name
-      }
-
-      if(!method){
-        this.pokeCounter++;
-        this.pokeCounter = this.pokeCounter > 6 ? 6 : this.pokeCounter;
-      } else {
-        this.pokeCounter--;
-        this.pokeCounter = this.pokeCounter < 1 ? 1 : this.pokeCounter;
-      }
-      
-      this.setState({profile: profiles});
-
+      this.setState({rosters: data});
     });
   }
 
-  pokeQuery() {
-    $.getJSON('/pokelist', data => {
-      console.log(data);
-      if(data.length === 0) {
-        this.setState({pokelist: []});
-      } else {
-        this.setState({pokelist: data});
-      }
-      
-    });
-  }
-  searchQuery(event) {
+  render() {
 
-    this.setState({query: event.target.value});
-  }
-  searchHandler(event) {
-    if(!this.state.query) {
-      this.setState({pokelist: []});
-    } else {
-      $.post('/pokemon', {query: this.state.query});
-      this.pokeQuery();
-    }
-
-
-    event.preventDefault();
-  }
-
-  saveRoster(roster) {
-    $.post('/roster', roster);
-  }
-  render () {
-    return (
+    return(
       <div>
-        <h1 style={{textAlign: 'center'}}>{'</> '}Pokemon Roster Creator App // Mode: CREATE{' </>'}</h1>
+        <h1 style={{textAlign: 'center'}}>{'</> '}Pokemon Roster Creator App // View Rosters{' </>'}</h1>
         <hr/>
-        <div className="prime-container">
-          
-          <div>
-          <h1>Pokemon Roster List</h1>
-            <Search query={this.searchQuery} search={this.searchHandler} />
-            <button onClick={this.pokeUndo}>Undo Selection</button><br/>
-            <button onClick={() => this.saveRoster(this.state.profile)}>Save Roster</button>
-            <PokeList select={this.pokeSelect} pokelist={this.state.pokelist} />
-          </div>
-          <div>
-            
-            <div id="poke-roster">
-              <Profile profilePic={this.state.profile['1'].profilePic} name={this.state.profile['1'].profileName} />
-              <Profile profilePic={this.state.profile['2'].profilePic} name={this.state.profile['2'].profileName} />
-              <Profile profilePic={this.state.profile['3'].profilePic} name={this.state.profile['3'].profileName} />
-              <Profile profilePic={this.state.profile['4'].profilePic} name={this.state.profile['4'].profileName} />
-              <Profile profilePic={this.state.profile['5'].profilePic} name={this.state.profile['5'].profileName} />
-              <Profile profilePic={this.state.profile['6'].profilePic} name={this.state.profile['6'].profileName} />
-            </div>
-          </div>
-          <Roster />
+        <div id="roster-view">
+          <Roster rosters={this.state.rosters} />
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
-ReactDOM.render(<App />, document.getElementById('app'));
+
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path='/' component={Home}/>
+      <Route path='/roster/create' component={Create}/>
+      <Route path='/roster' component={RosterView}/>
+    </Switch>
+  </main>
+)
+
+const Header = () => (
+  <header>
+    <nav>
+      <ul>
+        <li><Link to='/'>Home</Link></li>
+        <li><Link to='/roster/create'>Create Roster</Link></li>
+        <li><Link to='/roster'>View Roster</Link></li>
+      </ul>
+    </nav>
+  </header>
+);
+
+const App = () => (
+  <div>
+    <Header />
+    <hr />
+    <Main />
+  </div>
+);
+
+
+ReactDOM.render((
+  <HashRouter>
+    <App />
+  </HashRouter>
+), document.getElementById('app'));
