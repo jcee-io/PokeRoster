@@ -1,4 +1,4 @@
-# Project Name #
+Pokemon Lineup Simulator
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -16,29 +16,16 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+Pokemon Lineup Simulator
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+The Pokemon Lineup Simulator is designed for those who would want to publish their lineup and compare with other users.
 
-## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+This is a form of social media where one could observe and review another person's six-pokemon lineup when establishing a team. One may issue comments, a review, or tips on how one can improve their lineup when considering the Individual and Environmental Values that each of their pokemon possesses.
 
-## Problem ##
-  > Describe the problem your product solves.
+The problem that my product solves is to limit verbal discussion and looking up possibilities on what would make the best pokemon lineup. My product elegantly solves the problem by allowing individuals to select pokemon, save the roster, and publish it.
 
-## Solution ##
-  > Describe how your product elegantly solves the problem.
+As a person in our company said "This has been the best thing since the invention of the wheel," the ease of using this product speaks volumes as you only need to simply type a name of a pokemon on the index, and select amongst those that matches the query, and once you save the roster, you can view the beauty of your product in the view page of the app.
 
-## Quote from You ##
-  > A quote from a spokesperson in your company.
+A wise customer once said, "Oh boy, Justin's product is the best," and while I am humbled by such a comment, I couldn't help but agree with this.
 
-## How to Get Started ##
-  > Describe how easy it is to get started.
-
-## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-
-## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+As a customer, the next thing they should do is to give me a review and what features they would expect.
