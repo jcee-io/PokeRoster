@@ -63,44 +63,17 @@ app.get('/pokelist', function(req, res) {
 });
 
 app.post('/pokemon', function (req, res) {
-	console.log(req.body.query);
 	var pokemon = req.body.query;
+	var allPokemon = pokemonDB.all().filter(name => pokemonDB.getId(name) <= 721)
 
-	pokeQuery = pokemonDB.all().filter(item => (
-		item.toLowerCase()[0] === pokemon[0]) && item.toLowerCase().includes(pokemon)
-	).sort().slice(0,10);
+	pokeQuery = allPokemon.filter(item => (
+		item.toLowerCase().includes(pokemon)
+	)).sort();
 
-	pokeSelect = [];
+	pokeSelect = pokeQuery.map(pokemon => ({name: pokemon}));
 
-	var recursion = function(arr) {
-		if(arr.length === 0) {
-			res.end();
-		}
 
-		if(arr[0]){
-			request.get(`http://pokeapi.co/api/v2/pokemon/${arr[0].toLowerCase()}/`, (err, resp, data) => {
-				if(data && !data.includes('!DOCTYPE')){
-					data = JSON.parse(data);
-					if(data.sprites){
-						pokeSelect.push({
-							name: arr[0],
-							photo: data.sprites.front_default
-						});	
-					}
-					console.log(pokeSelect[pokeSelect.length - 1]);	
-					recursion(arr.slice(1));
-				} else {
-					console.log('SOMETHING WENT WRONG');
-					res.end();
-				}
-					
-
-			});
-		}
-
-	}
-
-	recursion(pokeQuery);
+	res.end();
 
 });
 
@@ -122,6 +95,15 @@ app.post('/acquire', function(req, res) {
 
 	res.end();
 
+});
+
+app.get('/roster/data', function(req,res) {
+	var id = req.url.split('?')[1].split('=')[1];
+
+	db.findById(id)
+	.then(data => {
+		res.json(data);
+	});
 });
 
 app.get('/roster', function(req, res) {

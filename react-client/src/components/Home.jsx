@@ -14,21 +14,17 @@ const Home = () => (
       <ul>
         <strong>
         <li>
-          The speed of the pokeapi (it generates more than just the sprite image) clocks out to be just around 500ms
-          per pokemon (it only takes single entry), please wait for a little white before selecting your pokemon when
-          creating your roster.
+          You can start looking for pokemon on the create page on the left hand side on the text input.
         </li>
         <li>
-          Each selection generates 10 results at most and bases it off of the first letter of your search, please be
-          more specific when trying to find your pokemon (this is to limit the amount of api calls in the query)
-        </li>
-        <li>
-          Alola generation pokemon come up in the query, but DOES NOT exist in the pokeapi, refrain from attempting to
-          select them (again this is an MVP that took three days to make).
+          Alola generation (aka Sun/Moon) pokemon DO NOT exist in the images (I've made sure the couldn't be searched)
         </li>
         <li>
           There will be three lengths in the navbar, one for this homepage, one for the creation of the rosters, and one
           to view those rosters.
+        </li>
+        <li>
+          For best results, please do teams of six pokemon.
         </li>
         </strong>
       </ul>

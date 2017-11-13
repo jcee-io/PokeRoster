@@ -3,9 +3,35 @@ import Search from './Search.jsx';
 import PokeList from './PokeList.jsx';
 import Profile from './Profile.jsx';
 import Roster from './Roster.jsx';
+import PokemonGif from 'react-pokemon-gif';
 import $ from 'jquery';
 
-
+var defaultProfile = {
+  1: {
+    profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
+    profileName: 'Select Pokemon'
+  }, 
+  2: {
+    profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
+    profileName: 'Select Pokemon'
+  },
+  3: {
+    profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
+    profileName: 'Select Pokemon'
+  },
+  4: {
+    profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
+    profileName: 'Select Pokemon'
+  },
+  5: {
+    profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
+    profileName: 'Select Pokemon'
+  },
+  6: {
+    profilePic:'http://rs1344.pbsrc.com/albums/p645/Pichubytes/Pi_zpsd2dda909.png~c200',
+    profileName: 'Select Pokemon'
+  }
+}
 
 class Create extends React.Component {
   constructor(props) {
@@ -76,6 +102,7 @@ class Create extends React.Component {
 
       this.pokeSelect('default');
 
+      this.pokeCounter--;
       this.pokeCounter = this.pokeCounter < 1 ? 1 : this.pokeCounter;
 
       this.setState({profile: profiles}); 
@@ -87,16 +114,22 @@ class Create extends React.Component {
       console.log(data);
       var profiles = this.state.profile;
 
-      profiles[this.pokeCounter.toString()] = {
-        profilePic: data.photo,
-        profileName: data.name
+      if(data.name === 'Select Pokemon') {
+        profiles[this.pokeCounter.toString()] = {
+          profilePic: this.defaultProfilePic,
+          profileName: data.name
+        } 
+      } else {
+        profiles[this.pokeCounter.toString()] = {
+          profilePic: null,
+          profileName: data.name
+        }        
       }
 
       if(!method){
         this.pokeCounter++;
         this.pokeCounter = this.pokeCounter > 6 ? 6 : this.pokeCounter;
       } else {
-        this.pokeCounter--;
         this.pokeCounter = this.pokeCounter < 1 ? 1 : this.pokeCounter;
       }
       
@@ -117,7 +150,6 @@ class Create extends React.Component {
     });
   }
   searchQuery(event) {
-
     this.setState({query: event.target.value});
   }
   searchHandler(event) {
@@ -134,6 +166,7 @@ class Create extends React.Component {
 
   saveRoster(roster) {
     $.post('/roster', roster);
+    this.setState({profile: defaultProfile})
   }
 
   render () {

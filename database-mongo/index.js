@@ -58,6 +58,14 @@ var find = () => {
     });
   });
 };
+
+var findById = (id) => {
+  return new Promise((resolve, reject) => {
+    Roster.find({_id: id}, function(err, docs) {
+      resolve(docs);
+    });
+  });
+}
 var save = item => {
   Roster.remove(item, function(err) {
     var pokemon = new Roster(item);
@@ -71,3 +79,4 @@ var save = item => {
 module.exports.selectAll = Promise.promisify(selectAll);
 module.exports.save = save;
 module.exports.find = find;
+module.exports.findById = findById;

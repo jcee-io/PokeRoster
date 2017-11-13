@@ -2,40 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Create from './components/Create.jsx';
 import Home from './components/Home.jsx';
-import Roster from './components/Roster.jsx';
+import RosterView from './components/RosterView.jsx';
+import RosterInfo from './components/RosterInfo.jsx';
+import RosterListEntry from './components/RosterEntryList.jsx';
 import {HashRouter, Switch, Route, Link} from 'react-router-dom';
 import $ from 'jquery';
 
-class RosterView extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      rosters: []
-    }
-
-    this.loadRoster();
-  }
-
-  loadRoster() {
-    $.getJSON('/roster', data => {
-      console.log(data);
-      this.setState({rosters: data});
-    });
-  }
-
-  render() {
-
-    return(
-      <div>
-        <h1 style={{textAlign: 'center'}}>{'</> '}Pokemon Roster Creator App // View Rosters{' </>'}</h1>
-        <hr/>
-        <div id="roster-view">
-          <Roster rosters={this.state.rosters} />
-        </div>
-      </div>
-    );
-  }
-};
+const Roster = () => (
+  <Switch>
+    <Route exact path='/roster' component={RosterView}/>
+    <Route path='/roster/:id' component={RosterInfo} handler={RosterListEntry}/>
+  </Switch>
+)
 
 
 const Main = () => (
@@ -43,7 +21,7 @@ const Main = () => (
     <Switch>
       <Route exact path='/' component={Home}/>
       <Route path='/roster/create' component={Create}/>
-      <Route path='/roster' component={RosterView}/>
+      <Route path='/roster' component={Roster}/>
     </Switch>
   </main>
 )
@@ -51,11 +29,9 @@ const Main = () => (
 const Header = () => (
   <header>
     <nav>
-      <ul>
-        <li><Link to='/'>Home</Link></li>
-        <li><Link to='/roster/create'>Create Roster</Link></li>
-        <li><Link to='/roster'>View Roster</Link></li>
-      </ul>
+        <div className='link'><Link to='/'>Home</Link></div>
+        <div className='link'><Link to='/roster/create'>Create Roster</Link></div>
+        <div className='link'><Link to='/roster'>View Roster</Link></div>
     </nav>
   </header>
 );
